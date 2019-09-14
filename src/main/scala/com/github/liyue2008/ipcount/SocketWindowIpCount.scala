@@ -52,9 +52,11 @@ object SocketWindowIpCount {
     // 定义输入：从Socket端口中获取数据输入
     val hostname: String = "localhost"
     val port: Int = 9999
+    // Task 1
     val input: DataStream[String] = env.socketTextStream(hostname, port, '\n')
 
     // 数据转换：将非结构化的以空格分隔的文本转成结构化数据IpAndCount
+    // Task 2
     input
       .map { line => line.split("\\s") }
       .map { wordArray => IpAndCount(new SimpleDateFormat("HH:mm:ss").parse(wordArray(0)), wordArray(1), 1) }
@@ -62,7 +64,10 @@ object SocketWindowIpCount {
     // 计算：每5秒钟按照ip对count求和
 
       .assignAscendingTimestamps(_.date.getTime) // 告诉Flink时间从哪个字段中获取
+
+
       .keyBy("ip") // 按照ip地址统计
+      // Task 3
       .window(TumblingEventTimeWindows.of(Time.seconds(5))) // 每5秒钟统计一次
       .sum("count") // 对count字段求和
 
