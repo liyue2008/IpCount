@@ -54,7 +54,7 @@ Starting standalonesession daemon on host localhost.
 Starting taskexecutor daemon on host localhost.
 ```
 
-## 启动模式日志服务
+## 启动模拟日志服务
 
 首先需要启动模拟日志服务，作为数据源
 
